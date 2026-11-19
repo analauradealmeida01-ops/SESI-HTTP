@@ -2,7 +2,7 @@ const express = require('express');
 
 const app = express();
 
-app.use(experess.json());
+app.use(express.json());
 
 const PORT = 3000;
 
@@ -36,14 +36,15 @@ app.get("/alunos/:id", (req, res) =>{
 
     if (!aluno){
         return res.status(404).json({
-            mensagem: "Aluno não emcontrado."
+            mensagem: "Aluno não encontrado."
         });
     }
+    res.status(200).json(aluno);
 });
 
 //POST - Cadastrar aluno
 
-app.post("/aluni", (req, res) => {
+app.post("/aluno", (req, res) => {
     const {nome, email, turma} = req.body;
 
     if(!nome || !email || !turma) {
@@ -66,7 +67,7 @@ app.post("/aluni", (req, res) => {
 })
 
 //PUT - Atualizar
-app.put(!/aluno/:id, (req, res) =>{
+app.put('/aluno/:id', (req, res) =>{
     const id = Number(req.params.id);
 
     const indice = alunos.findIndex(a => a.id === id);
@@ -110,4 +111,12 @@ app.delete("/aluno/:id", (req, res) => {
 
     alunos = alunos.filter(a => a.id !== id);
     res.status(204). send();
-})
+});
+
+// Iniciar Servidor
+app.listen(PORT,() => {
+    console.log(`API executando em http://localhost:${PORT}`);
+
+
+
+});
